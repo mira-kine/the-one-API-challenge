@@ -36,3 +36,19 @@
 - Edit + /users/:id/edit + GET + Shows edit form for user with a specific ID
 - Update + users/:id + PUT (updates user with specific ID)
 - Destroy + users/:id + DELETE (deletes user)
+
+### Switching
+
+- have your original component, and then use switch to help you navigate to using Route paths
+- <Route exact path="/"> is like a big if else statement
+  - without "exact", if it matches even PART of the path, it considers it a match
+  - remember that order matters
+
+### Notes
+
+- Fetch(API url, optional argument that includes information regarding the request you want to make to the database or API)
+  - forex: headers: {
+    Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+    }
+- REACT_APP_API_KEY=mFODZAdrKwZRt3xTIh7y
+-
