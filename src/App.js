@@ -16,24 +16,29 @@ function App() {
   }, []);
 
   const getFilms = async () => {
-    const resp = await fetch('https://the-one-api.dev/v2/movie/', {
+    const resp = await fetch(`${process.env.REACT_APP_SUPABASE_URL}/rest/v1/films`, {
       headers: {
-        Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+        apikey: process.env.REACT_APP_SUPABASE_KEY,
+        Authorization: `Bearer ${process.env.REACT_APP_SUPABASE_KEY}`,
       },
     });
     const data = await resp.json();
-    const newData = data.docs.map((item) => [item.name, item.name.toLowerCase()]);
+    const newData = data.map((item) => [
+      item.title,
+      item.title.toLowerCase().replace(/ /g, '-'),
+      item.academy_award_nominations,
+      item.box_office_total,
+    ]);
     setFilms(newData);
   };
-  console.log(films);
 
   // Add your code here!
   // 1. Get data using fetch from https://the-one-api.dev/v2/movie/ (don't forget to set your header!)
   // 2. Transform the response so that films contains nested arrays of:
   //   - the film's title
   //   - the film's title "slugified" i.e. in all lower case, with words separated with dashes,
-  //   - the box office total
-  //   - academy award nominations
+  //   - the box office total (box_office_total)
+  //   - academy award nominations (academy_award_nominations)
   // NOTE: make sure you look at the response from the server - it may not be consistent
   // [["The Lord of the Rings Series", "the-lord-of-the-rings-series", 2917, 30 ], ["The Hobbit Series", "the-hobit-series", 2932, 7]...]
 
@@ -41,14 +46,15 @@ function App() {
   // 4. You'll know it works if the films show up on the page
 
   const getCharacters = async () => {
-    const resp = await fetch('https://the-one-api.dev/v2/movie/', {
+    const resp = await fetch(`${process.env.REACT_APP_SUPABASE_URL}/rest/v1/characters`, {
       headers: {
-        Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+        apikey: process.env.REACT_APP_SUPABASE_KEY,
+        Authorization: `Bearer ${process.env.REACT_APP_SUPABASE_KEY}`,
       },
     });
     const data = await resp.json();
+    // const newData = data.docs.map((item) => [item.name, item.birth, item.death]);
     setCharacters(data);
-    return data;
     // Add your code here!
     // 1. Get data using fetch from https://the-one-api.dev/v2/character/
     // 2. Update the response data with the key `dates` which is a combination of
