@@ -53,8 +53,16 @@ function App() {
       },
     });
     const data = await resp.json();
-    // const newData = data.docs.map((item) => [item.name, item.birth, item.death]);
-    setCharacters(data);
+
+    const newData = data.map((item) => {
+      if (item.birth === item.death) {
+        return [item.name, (item.dates = 'Unknown')];
+      } else {
+        return [item.name, (item.dates = `${item.birth} - ${item.death}`)];
+      }
+    });
+
+    setCharacters(newData);
     // Add your code here!
     // 1. Get data using fetch from https://the-one-api.dev/v2/character/
     // 2. Update the response data with the key `dates` which is a combination of
